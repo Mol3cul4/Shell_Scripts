@@ -1,0 +1,21 @@
+#Replace ID's multifasta file with names in list txt files:
+
+awk 'NR == FNR { o[n++] = $0; next } /^>/ && i < n { $0 = ">" o[i++] } 1' ID_samples_PA.csv samples_PA.fasta > output.fa
+
+
+#Replace ID's of a multifasta file:
+
+awk 'BEGIN { c=1 } $1 ~ /^>/ { s=gensub(/.*=([A-Z0-9]+)_[0-9]+$/,">\\1_"c,"g",$1); print s; c+=1 } $1 !~ /^>/ { print }' seqs.fa
+
+
+awk -F'>' 'NR==FNR{ids[$0]; next} NF>1{f=($2 in ids)} f' id.txt seq.fasta
+
+------------------------------------------------------------------------------------------------------------------
+
+Extract sequences based on a ID_list:
+awk 'FNR==NR{a[$0];next} /^>/{val=$0;sub(/^>/,"",val);flag=val in a?1:0} flag' id_list.txt raw_reads_SE.fasta > output.fa
+
+
+
+Split a multi-FASTA file into individual FASTA files:
+awk '/^>/{s=++d".fa"} {print > s}' multi.fa 
