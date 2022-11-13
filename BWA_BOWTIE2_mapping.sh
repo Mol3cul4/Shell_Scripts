@@ -16,7 +16,7 @@ done
 
 cat *.fasta > consensus_files/samples_bwa.fasta
 mafft --maxiterate 8000 consensus_files/samples_bwa.fasta > consensus_files/aligned.samples_bwa.fasta
-mv 22010101*.fasta consensus_files/
+mv *consensus.fasta consensus_files/
 awk 'NR == FNR { o[n++] = $0; next } /^>/ && i < n { $0 = ">" o[i++] } 1' id_list.txt consensus_files/aligned.samples_bwa.fasta > consensus_files/aligned.samples_BWA.fasta
 rm *.sam
 
@@ -34,7 +34,7 @@ done
 
 cat *.fasta > consensus_files/samples_bowtie2.fasta
 mafft --maxiterate 8000 consensus_files/samples_bowtie2.fasta > consensus_files/aligned.samples_bowtie2.fasta
-mv 22010101*.fasta consensus_files/
+mv *consensus.fasta consensus_files/
 awk 'NR == FNR { o[n++] = $0; next } /^>/ && i < n { $0 = ">" o[i++] } 1' id_list.txt consensus_files/aligned.samples_bowtie2.fasta > consensus_files/aligned.samples_BOWTIE2.fasta
 rm *.sam
 
